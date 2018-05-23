@@ -11,15 +11,21 @@ namespace ConsoleApp1
         {
             Console.WriteLine(DateTime.Now + " -> 正在解析UI组件");
             var window = AutomationElement.FromHandle(new IntPtr(397890));
-            var area = window.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit));
-            StringBuilder build = new StringBuilder();
-            if (area != null)
+            var areas = window.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit));
+            if(areas.Count < 2)
             {
-                build.AppendLine("Name:" + area.Current.Name);
-                build.AppendLine("CalssName:" + area.Current.ClassName);
-                build.AppendLine("Handle:" + area.Current.NativeWindowHandle);
-                build.AppendLine("Rect:" + area.Current.BoundingRectangle);
-                build.AppendLine("Value:" + ((ValuePattern)area.GetCurrentPattern(ValuePattern.Pattern)).Current.Value);
+                Console.WriteLine(DateTime.Now + " -> 解析失败");
+                return;
+            }
+            AutomationElement element = null;
+            StringBuilder build = new StringBuilder();
+            if (element != null)
+            {
+                build.AppendLine("Name:" + element.Current.Name);
+                build.AppendLine("CalssName:" + element.Current.ClassName);
+                build.AppendLine("Handle:" + element.Current.NativeWindowHandle);
+                build.AppendLine("Rect:" + element.Current.BoundingRectangle);
+                build.AppendLine("Value:" + ((ValuePattern)element.GetCurrentPattern(ValuePattern.Pattern)).Current.Value);
             }
             Console.WriteLine(DateTime.Now + " -> 解析结果: \r\n" + build.ToString());
             Console.ReadKey();
