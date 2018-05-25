@@ -17,7 +17,7 @@ namespace ConsoleApp1
                 Console.WriteLine(DateTime.Now + " -> 解析失败");
                 return;
             }
-            AutomationElement element = null;
+            AutomationElement element = areas[1];
             StringBuilder build = new StringBuilder();
             if (element != null)
             {
